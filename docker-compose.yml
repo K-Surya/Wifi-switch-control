@@ -4,22 +4,16 @@ services:
     container_name: wifi-switch-control
     restart: unless-stopped
     env_file:
-      - .env
+      - stack.env
     environment:
       NODE_ENV: production
       PORT: 3000
       SESSION_STORE_FILE: /data/sessions.json
       TRUST_PROXY: "true"
     ports:
-      - "127.0.0.1:3000:3000"
-    networks:
-      - wifi-switch-private
+      - "3000:3000"
     volumes:
       - wifi-switch-sessions:/data
-
-networks:
-  wifi-switch-private:
-    external: true
 
 volumes:
   wifi-switch-sessions:

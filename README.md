@@ -38,13 +38,16 @@ Login attempts are limited to eight failures per client address in a 15-minute w
 
 ## Docker Compose and HTTPS
 
-Configure `.env`, then run:
+Configure `.env`, then copy it to the Compose env file and run:
 
 ```sh
+cp .env stack.env
 docker compose up -d --build
 ```
 
 Compose binds the app to `127.0.0.1:3000`, attaches a persistent Docker volume for sessions, and uses production mode. Put Nginx or another HTTPS reverse proxy in front. It must set `X-Forwarded-Proto` to the incoming scheme, overwrite `X-Forwarded-For` with the actual client address, and preserve the `Host` header. Do not expose the app port directly to untrusted networks.
+
+When deploying this stack from Git in Portainer, upload your environment file in the stack's Environment variables section. Portainer provides those values to `stack.env`, which Compose passes into the container. Do not commit a real environment file. Set `MQTT_URL` to an address the container can reach; if the broker runs on the Docker host, use the host's LAN address and its published MQTT port.
 
 The container must be able to route to the MQTT broker. Restrict its MQTT account to the three app topics where the broker supports topic ACLs.
 
