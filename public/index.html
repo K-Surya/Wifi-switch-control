@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3f7fc">
+  <title>WiFi Switch Control</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="shell">
+    <section class="login-card" id="login-panel" aria-labelledby="login-title" hidden>
+      <p class="eyebrow">WIFI SWITCH CONTROL</p>
+      <h1 id="login-title">Welcome back</h1>
+      <p class="muted">Sign in to control your switches. This device will stay signed in for 30 days.</p>
+      <form id="login-form">
+        <label for="username">Username</label>
+        <input id="username" name="username" autocomplete="username" required>
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" required>
+        <p class="message" id="login-error" role="alert"></p>
+        <button class="primary" type="submit">Sign in</button>
+      </form>
+    </section>
+
+    <section id="dashboard" hidden>
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">WIFI SWITCH CONTROL</p>
+          <h1>Switchboard</h1>
+        </div>
+        <button class="quiet" id="logout" type="button">Log out</button>
+      </header>
+
+      <section class="health-panel" aria-live="polite">
+        <span class="health-light" id="health-light"></span>
+        <div class="health-copy">
+          <strong id="health-title">Checking node</strong>
+          <span id="health-detail">Waiting for ESP32 health message</span>
+        </div>
+        <span class="broker-state" id="broker-state">Broker connecting</span>
+      </section>
+
+      <div class="switch-grid">
+        <article class="switch-card">
+          <div class="card-top"><span class="number">01</span><span class="topic">esp32/switch1</span></div>
+          <h2>Switch 1</h2>
+          <div class="control-row">
+            <span class="state-label" id="state-switch1">No state yet · tap to turn on</span>
+            <button class="switch-toggle" id="toggle-switch1" type="button" role="switch" aria-checked="false" aria-label="Switch 1" disabled><span></span></button>
+          </div>
+        </article>
+        <article class="switch-card">
+          <div class="card-top"><span class="number">02</span><span class="topic">esp32/switch2</span></div>
+          <h2>Switch 2</h2>
+          <div class="control-row">
+            <span class="state-label" id="state-switch2">No state yet · tap to turn on</span>
+            <button class="switch-toggle" id="toggle-switch2" type="button" role="switch" aria-checked="false" aria-label="Switch 2" disabled><span></span></button>
+          </div>
+        </article>
+      </div>
+      <p class="notice" id="notice" role="status"></p>
+      <footer>Commands publish <code>ON</code> or <code>OFF</code>. Switch position follows the latest MQTT message.</footer>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
